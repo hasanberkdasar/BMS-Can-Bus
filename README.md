@@ -36,6 +36,7 @@ Why chosen?: Resistors and capacitors used to ensure signal integrity and suppre
 How it's connected & its role: Connected as RC filter networks along sensitive signal traces leading to IC pins, preventing false readings or erroneous triggers caused by electrical noise.
 
 📂 Dosya Yapısı / File Structure
+
 BMS-Can-Bus.kicad_sch - Şematik / Schematic
 
 BMS-Can-Bus.kicad_pcb - PCB Yerleşimi / PCB Layout
@@ -82,6 +83,7 @@ Ne için seçildi?: Sinyal bütünlüğünü korumak ve dış elektromanyetik g�
 Nasıl bağlandı ve görevi nedir?: Entegre bacaklarına giden hassas hatlara seri dirençler ve paralel kondansatörler (RC filtreler) şeklinde yerleştirilmiştir. Amaç, hatlardaki parazitleri süzerek yanlış ölçümlerin veya hatalı tetiklemelerin önüne geçmektir.
 
 📂 Dosya Yapısı / File Structure
+
 BMS-Can-Bus.kicad_sch - Şematik / Schematic
 
 BMS-Can-Bus.kicad_pcb - PCB Yerleşimi / PCB Layout
