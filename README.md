@@ -1,76 +1,45 @@
-# 4S 5A SMART BMS (BQ76952 & STM32F103)
+#  Smart BMS (BQ76952 & STM32F103) — 4S Lithium Battery Management System
 
-!!!This project is my first PCB design, developed as a 1st-year Electrical & Electronics Engineering student at Kahramanmaraş Sütçü İmam University to learn hardware design and communication architectures of Battery Management Systems (BMS).
+##  About The Project & Personal Context
+This project is an open-source **4S Smart Battery Management System (BMS)** designed around the **Texas Instruments BQ76952** Analog Front-End (AFE) and an **STM32F103C8T6** microcontroller. 
 
-!!!As it was created during the initial phase of my learning process, there may be complexities in the schematics and PCB trace routings. These will be optimized in future revisions.
-
----
-
-## Component Selection and Circuit Rationale
-
-### 1. Texas Instruments BQ76952 (Analog Front End)
-* **Selection Reason:** Industry-standard AFE capable of precise cell voltage, current, and temperature measurements. 3S to 16S Li-Ion / LiFePO4 battery pack protection.
-* **Connection Architecture:**
-  * Provides a 3.3V regulated rail via the REG1 pin to power the MCU and CAN transceiver.
-  * Current measurements are routed from a 1mΩ shunt resistor to SRP and SRN pins through a differential RC filter (100Ω resistors and 100nF capacitors).
-  * Two 10kΩ NTC thermistors are connected to TS1 and TS2 for temperature tracking.
-  * The BMS_ALERT pin is routed to STM32 PA0 to generate hardware interrupts during faults.
-
-### 2. STM32F103CBT6 (Microcontroller)
-* **Selection Reason:** Selected to learn the ARM Cortex-M3 architecture and hardware CAN Bus protocol.
-* **Connection Architecture:**
-  * VBAT, VDD, and VDDA power pins are connected to the +3V3 rail provided by the BQ76952. 100nF decoupling capacitors are placed in parallel between each power pin and GND to prevent voltage dips.
-  * An 8MHz external crystal (HSE) with 22pF load capacitors is connected to PD0 and PD1 for accurate CAN Bus clock timing.
-  * The NRST pin is protected with a 100nF capacitor and a 10kΩ pull-up resistor. BOOT0 is pulled to GND via a 10kΩ pull-down resistor to ensure boot execution from internal flash memory.
-
-### 3. SN65HVD230 (CAN Bus Transceiver)
-* **Selection Reason:** The 3.3V-native SN65HVD230 was selected because the board lacks a 5V rail and runs directly from the 3.3V LDO output of the BQ76952.
-* **Connection Architecture:**
-  * D (TX) and R (RX) pins are connected to STM32 PA12 (CAN_TX) and PA11 (CAN_RX).
-  * A 120Ω termination resistor is placed across CANH and CANL to suppress signal reflections.
-  * The Rs pin is pulled to GND through a 10kΩ resistor for high-speed operation mode.
-
-### 4. I2C Communication Bus
-* Since I2C is an open-drain architecture, 4.7kΩ pull-up resistors are connected from the +3V3 rail to both I2C_SDA and I2C_SCL lines to enable proper communication between the BQ76952 and STM32.
+As a **1st-year Electrical and Electronics Engineering student**, this project represents my very first custom PCB design experience. It was built purely as a personal prototype, a learning step, and a hands-on exploration of power electronics and embedded hardware design. Because of my beginner level, the schematic and layout might appear complex, unoptimized, or messy in certain areas—it was developed as a continuous trial-and-error learning path.
 
 ---
 
-## PCB Design Status
+## ⚠️ Important Engineering Note: Scaling Down from 100A to 5A
 
-* **Layer Count:** 2 Layers (FR4).
-* **Copper Fills:** Continuous GND copper pours are applied to both F.Cu and B.Cu layers for noise suppression and thermal management.
-* **DRC Status:** Verified via KiCad Design Rules Check with 0 Errors, 0 Warnings, and 0 Unconnected Items.
-
----
-
-## File Structure
-
-* BMS-Can-Bus.kicad_sch - Şematik / Schematic
-
-* BMS-Can-Bus.kicad_pcb - PCB Yerleşimi / PCB Layout
-
-* BMS-Can-Bus.kicad_pro - KiCad Proje Dosyası / Project File
-
-* ksulog2.kicad_mod - KSÜ Logo Footprint
+* **Original Scope vs. Current Reality:** The initial goal was to build a high-power 100A continuous BMS. However, as the design progressed, I realized that managing thermal dissipation and routing high-current copper paths properly on a standard 2-layer PCB exceeded my current technical expertise. 
+* **Current Power Rating:** To keep the design safe and realistic, the continuous current rating has been officially scaled down to **5A continuous (15A peak)** for this version.
+* **Why Some Traces Look Unusually Large:** You will notice that certain power paths on the board are disproportionately wide for a 5A system. These are remnants of the original 100A power path layout attempts.
+* **Tested Status:** Please note that **this design has NOT been physically fabricated or hardware-tested**. It exists purely as a CAD/EDA design file.
+* **Future Outlook:** The project is temporarily put on hold. Once I gain further engineering experience and technical proficiency, I plan to revisit this project to optimize thermal management and push the layout to support 100A peak and 50–60A continuous power on a computer simulation environment.
 
 ---
 
-## Author Information
+##  Architecture & Component Selection
 
-* **Hasan Berk Daşar**
-* Kahramanmaraş Sütçü İmam University — Electrical & Electronics Engineering
-* Open to technical feedback and constructive recommendations.
+### 1. Topology Selection (4S System)
+A 4-series (4S) Lithium-ion / LiFePO4 configuration was selected as it matches standard low-voltage applications (such as 12V system upgrades, small EVs, or robotics power distribution) while offering a safe voltage range for learning.
 
+### 2. Key Components & Selection Rationale
+* **Texas Instruments BQ76952 (AFE):** Chosen for its highly integrated cell monitoring, hardware-level overvoltage/undervoltage protection, and flexible low-side/high-side FET drive capabilities.
+* **STM32F103C8T6 (MCU):** Used as the primary host controller to read telemetry data via I2C/SMBus from the BQ76952, execute custom BMS logic, and manage external communications.
+* **SN65HVD230 (CAN Transceiver):** Selected to convert the MCU's UART/CAN signals into a robust differential CAN-bus signal, making the BMS compatible with industrial and automotive telemetry networks.
+* **NTC Thermistors:** External thermistor headers are added for real-time thermal monitoring of the battery pack and power MOSFETs.
 
+---
 
+##  Circuit Interconnections & Features
 
+* **Power Path:** Utilizes dual-layer 2mm traces along with low-side MOSFET switching logic for battery isolation.
+* **Noise Immunity & Layout:** Decoupling capacitors are placed in immediate proximity to the power pins of both the AFE and MCU. The 8MHz crystal load capacitors are locked close to the oscillator pins.
+* **EMC Shielding:** Top and bottom layers are encased with a solid Ground (GND) polygon pour for noise suppression.
+* **Communication Interface:** Dedicated CAN-Bus interface pins enable continuous telemetry streaming (cell voltages, pack current, temperatures, and fault flags) to external dashboards or vehicle control units (VCU).
 
+<img width="801" height="871" alt="16" src="https://github.com/user-attachments/assets/634f0757-9060-494e-ad6c-87fc9f4221fb" />
+<img width="952" height="450" alt="19" src="https://github.com/user-attachments/assets/7063282a-6f06-4687-8e64-220adbe2d860" />
+<img width="735" height="787" alt="15" src="https://github.com/user-attachments/assets/8a2d0022-6a02-4389-b5bb-7d9b51d83f01" />
 
-
-
-
-<img width="1437" height="667" alt="3" src="https://github.com/user-attachments/assets/830ccc1e-99d7-4d42-a82f-e6fdfee5b5d9" />
-<img width="735" height="787" alt="15" src="https://github.com/user-attachments/assets/2b878add-5497-4477-b405-68b9fedcfdfa" />
-<img width="801" height="871" alt="16" src="https://github.com/user-attachments/assets/b678c631-1360-4ec3-b7f9-9fc9c196e146" />
 
 
