@@ -7,8 +7,8 @@
 	(title_block
 		(title "BMS - CAN Bus")
 		(rev "1.0")
-		(company "Electric Vehicle Battery Management System")
-		(comment 1 "100A Electric Vehicle Battery Management System")
+		(company "Battery Management System")
+		(comment 1 "5A  Battery Management System")
 		(comment 2 "Designed by Hasan Berk Dasar")
 	)
 	(lib_symbols
