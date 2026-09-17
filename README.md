@@ -32,7 +32,7 @@ A 4-series (4S) Lithium-ion / LiFePO4 configuration was selected as it matches s
 
 ##  Circuit Interconnections & Features
 
-* **Power Path:** Utilizes dual-layer 2mm traces along with low-side MOSFET switching logic for battery isolation.
+* **Power Path:** Utilizes dual-layer 2mm copper traces with a high-side back-to-back MOSFET pair (paralleled discharge/charge FETs) for battery isolation, and a low-side shunt resistor for current sensing.
 * **Noise Immunity & Layout:** Decoupling capacitors are placed in immediate proximity to the power pins of both the AFE and MCU. The 8MHz crystal load capacitors are locked close to the oscillator pins.
 * **EMC Shielding:** Top and bottom layers are encased with a solid Ground (GND) polygon pour for noise suppression.
 * **Communication Interface:** Dedicated CAN-Bus interface pins enable continuous telemetry streaming (cell voltages, pack current, temperatures, and fault flags) to external dashboards or vehicle control units (VCU).
