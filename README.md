@@ -1,4 +1,4 @@
-# 100A Smart BMS (BQ76952 & STM32F103)
+# 4S 15A SMART BMS (BQ76952 & STM32F103)
 
 !!!This project is my first PCB design, developed as a 1st-year Electrical & Electronics Engineering student at Kahramanmaraş Sütçü İmam University to learn hardware design and communication architectures of Battery Management Systems (BMS).
 
