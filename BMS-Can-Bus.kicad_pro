@@ -661,7 +661,7 @@
         "uuid": "be6209f5-df08-4e5f-b61a-6973fda12906"
       }
     ],
-    "used_designators": "RShuntResistor1,U1-4,J1-3,R1-22,C1-19,J_PACK+1-2,Q1-8,#PWR1-2,TH1-2,Y1,8MHZ1",
+    "used_designators": "RShuntResistor1,U1-4,J1-3,#FLG1,R1-22,C1-19,J_PACK+1-2,Q1-8,#PWR1-3,TH1-2,Y1,8MHZ1",
     "variants": []
   },
   "sheets": [
