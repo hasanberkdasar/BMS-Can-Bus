@@ -37,9 +37,10 @@ A 4-series (4S) Lithium-ion / LiFePO4 configuration was selected as it matches s
 * **EMC Shielding:** Top and bottom layers are encased with a solid Ground (GND) polygon pour for noise suppression.
 * **Communication Interface:** Dedicated CAN-Bus interface pins enable continuous telemetry streaming (cell voltages, pack current, temperatures, and fault flags) to external dashboards or vehicle control units (VCU).
 
-<img width="801" height="871" alt="16" src="https://github.com/user-attachments/assets/634f0757-9060-494e-ad6c-87fc9f4221fb" />
+<img width="901" height="717" alt="xx2" src="https://github.com/user-attachments/assets/b8a7a2e3-bd66-4c9d-9cc6-857171183849" />
 <img width="952" height="450" alt="19" src="https://github.com/user-attachments/assets/7063282a-6f06-4687-8e64-220adbe2d860" />
-<img width="735" height="787" alt="15" src="https://github.com/user-attachments/assets/8a2d0022-6a02-4389-b5bb-7d9b51d83f01" />
+<img width="997" height="786" alt="xx1" src="https://github.com/user-attachments/assets/7b84c7e1-8e7c-40b9-8443-afb7150de49c" />
+
 
 
 
